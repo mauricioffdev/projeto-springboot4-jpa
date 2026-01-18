@@ -1,12 +1,18 @@
 package com.educandoweb.course.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
+@Entity
+@Table(name = "tb_user") //renomeia a tabela do banco pra evitar conflito
 public class User implements Serializable {
 
     // Número de versão para garantir compatibilidade se a classe mudar (padrão da interface Serializable)
     private static final long serialVersionUID = 1L;
 
+    @Id //Fala pro JAP que o id é a chave primária
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Fala pro JPA que a chave é auto incrementável no banco
     private Long id;
     private String name;
     private String email;
