@@ -3,6 +3,8 @@ package com.educandoweb.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_user") //renomeia a tabela do banco pra evitar conflito
@@ -18,6 +20,10 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    // Coleção, recebe apenas o Get
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     //Como estou usando framework, obrigatório o construtor vazio
     public User(){
@@ -72,6 +78,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     //Comparar um objeto com outro
