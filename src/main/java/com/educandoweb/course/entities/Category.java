@@ -3,7 +3,9 @@ package com.educandoweb.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 //Annotations para que seja uma entidade do meu sistema gerenciada pelo JPA
 
@@ -18,7 +20,9 @@ public class Category implements Serializable {
     private Long Id;
     private String name;
 
-    public Category(){
+    private Set<Product> products = new HashSet<>(); //Associação com produto
+
+    public Category() {
     }
 
     public Category(Long id, String name) {
@@ -42,18 +46,20 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
         Category category = (Category) o;
-        return Objects.equals(Id, category.Id) && Objects.equals(name, category.name);
+        return Objects.equals(Id, category.Id);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(Id);
-        result = 31 * result + Objects.hashCode(name);
-        return result;
+        return Objects.hashCode(Id);
     }
 }
