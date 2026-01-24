@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "tb_user") //renomeia a tabela do banco pra evitar conflito
 public class User implements Serializable {
-
     // Número de versão para garantir compatibilidade se a classe mudar (padrão da interface Serializable)
     private static final long serialVersionUID = 1L;
 
