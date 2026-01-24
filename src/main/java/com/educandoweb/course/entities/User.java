@@ -22,7 +22,7 @@ public class User implements Serializable {
     private String password;
 
     // Coleção, recebe apenas o Get
-    @JsonIgnore
+    @JsonIgnore //Cortar associação de mão dupla
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
