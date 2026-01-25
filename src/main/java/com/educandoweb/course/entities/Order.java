@@ -31,6 +31,11 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
+    //No caso do Um para Um, vamos mapear para que as entidades tenham o mesmo ID
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment; //Associações
+
+
     public Order() {
     }
 
@@ -73,6 +78,14 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     //Pedido conhecer os itens dele
