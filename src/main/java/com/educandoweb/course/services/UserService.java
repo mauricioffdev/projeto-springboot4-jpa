@@ -19,8 +19,13 @@ public class UserService {
     }
 
     //Metodo para buscar um único usuário por ID (findById)
-    public User findByid(Long id) {
+    public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
         return obj.get();
+    }
+
+    //Operação para retornar o usuário salvo
+    public User insert(User obj) {
+        return repository.save(obj); //Metodo save retona o obj salvo
     }
 }
