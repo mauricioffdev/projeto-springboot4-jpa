@@ -2,8 +2,10 @@ package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,13 +33,24 @@ public class UserService {
     }
 
     //Deletar usuario
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(Long id) {
+        // 1. Verifica se o ID existe antes de tentar deletar
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
+
+        // 2. Se existe, deleta (agora seguro)
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation"); // <--- Mensagem curta e clara
+            //"Não é possível excluir usuário que possui pedidos."
+        }
     }
 
     //Alterar Usuario, getReference prepara o obj pra vc mexer e depois efetuar uma operação,
     // findById traz o obj
-    public User update(Long id, User obj){
+    public User update(Long id, User obj) {
         User entity = repository.getReferenceById(id);
         updateData(entity, obj);
         return repository.save(entity);
